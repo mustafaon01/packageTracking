@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Branch</title>
     <style>
     table {
       border-collapse: collapse;
@@ -33,14 +34,14 @@
     </style>
 </head>
 <body>
-<h1>Kargo Takip Sistemi</h1>
+<h1>Package Tracking System</h1>
 
-<h2>Kurye Bilgileri</h2>
+<h2>Enter Courier Information</h2>
 <table>
     <tr>
         <th>Courier ID</th>
-        <th>Kurye Adı</th>
-        <th>Kuryenin Bulunduğu Şehir</th>
+        <th>Courier Name</th>
+        <th>Location</th>
         <th>Action</th>
     </tr>
     <tr>
@@ -67,17 +68,17 @@
 
 
 
-<h2>Paket Bilgileri</h2>
+<h2>Enter Package Information</h2>
 
 
 <table>
     <tr>
         <th>Package ID</th>
-        <th>Müşteri Adı Soyadı</th>
-        <th>Adres</th>
-        <th>Şehir</th>
-        <th>Tahmini Varış Saati</th>
-        <th>Kurye</th>
+        <th>Costumer Name-Surname</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Estimated Arrival Time</th>
+        <th>Courier</th>
       <th>action</th>
     </tr>
 
@@ -93,7 +94,7 @@
                 {{ form.courier }}
             </td>
           <td>
-            <button name="add_package" type="submit">Paket Ekle</button>
+            <button name="add_package" type="submit">ADD PACKAGE</button>
           </td>
         </form>
     </tr>

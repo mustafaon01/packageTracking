@@ -55,35 +55,23 @@ def costumer(request):
                                     queryset=Package.objects.filter(package_id=id),
                                     request=request)
 
-    time_update = UpdateTime()
-    address_update = UpdateAddress()
     if request.method == "POST":
         id = request.GET.get("package_id")
         filter = Package_filter(request.GET, queryset=Package.objects.filter(package_id=id), request=request)
+
         if 'time' in request.POST:
-            time_update = UpdateTime(request.POST)
-            if time_update.is_valid():
-                obj = Package.objects.filter(package_id=id).first()
-                obj.estimated_arrival_time = time_update.cleaned_data["estimated_arrival_time"]
-                obj.save()
-            else:
-                print(time_update.errors)
+            obj = Package.objects.filter(package_id=id).first()
+            obj.estimated_arrival_time = request.POST.get('date_update')
+            obj.save()
+
         if 'address' in request.POST:
-            address_update = UpdateAddress(request.POST)
-            if address_update.is_valid():
-                print("valid")
-                obj2 = Package.objects.filter(package_id=id).first()
-                obj2.address = address_update.cleaned_data["address"]
-                obj2.save()
-            else:
-                print(address_update.errors)
+            obj2 = Package.objects.filter(package_id=id).first()
+            obj2.address = request.POST.get('address_update')
+            obj2.save()
 
     context = {
         'packages': packages,
         'filter': filter,
-        'time_update': time_update,
-        'address_update': address_update
     }
-
 
     return render(request, 'costumer.html', context)
