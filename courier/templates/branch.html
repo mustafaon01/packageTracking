@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    </style>
+</head>
+<body>
+<h1>Kargo Takip Sistemi</h1>
+
+<h2>Kurye Bilgileri</h2>
+<table>
+    <tr>
+        <th>Courier ID</th>
+        <th>Kurye Adı</th>
+        <th>Kuryenin Bulunduğu Şehir</th>
+        <th>Action</th>
+    </tr>
+    <tr>
+        <form method="POST">
+            {% csrf_token %}
+            <td>{{form_courier.courier_id}}</td>
+            <td>{{form_courier.courier_name}}</td>
+            <td>{{form_courier.location}}</td>
+            <td>
+            <button name = "add_courier" type="submit">ADD COURIER</button>
+          </td>
+        </form>
+
+    </tr>
+    {% for courier in couriers %}
+<tr>
+    <td>{{ courier.courier_id }}</td>
+    <td>{{ courier.courier_name}}</td>
+    <td>{{ courier.location }}</td>
+    <td> - </td>
+</tr>
+{% endfor %}
+</table>
+
+
+
+<h2>Paket Bilgileri</h2>
+
+
+<table>
+    <tr>
+        <th>Package ID</th>
+        <th>Müşteri Adı Soyadı</th>
+        <th>Adres</th>
+        <th>Şehir</th>
+        <th>Tahmini Varış Saati</th>
+        <th>Kurye</th>
+      <th>action</th>
+    </tr>
+
+    <tr>
+        <form method="POST">
+            {% csrf_token %}
+            <td>{{ form.package_id }}</td>
+            <td>{{ form.customer_name }}</td>
+            <td>{{ form.address }}</td>
+            <td>{{ form.city }}</td>
+            <td>{{ form.estimated_arrival_time }}</td>
+            <td>
+                {{ form.courier }}
+            </td>
+          <td>
+            <button name="add_package" type="submit">Paket Ekle</button>
+          </td>
+        </form>
+    </tr>
+    {% for package  in packages %}
+<tr>
+    <td>{{ package.package_id }}</td>
+    <td>{{ package.customer_name }}</td>
+    <td>{{ package.address }}</td>
+    <td>{{ package.city }}</td>
+    <td>{{ package.estimated_arrival_time }}</td>
+    <td>
+        {{ package.courier }}
+    </td>
+    <td> - </td>
+</tr>
+{% endfor %}
+</table>
+
+
+</body>
+</html>
