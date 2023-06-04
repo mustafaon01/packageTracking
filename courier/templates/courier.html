@@ -22,27 +22,37 @@
   </style>
 </head>
 <body>
-  <div class="input-field">
-    <label for="kurye-adi">Kurye Adı:</label>
-    <input type="text" id="kurye-adi" value="Ahmet Yılmaz">
-  </div>
+  <form method="get">
+    {{ courier_filter.form.courier_id }}
+    <button type="submit">SEARCH</button>
+  </form>
 
   <table>
     <thead>
-      <tr>
+    <tr>
+        <th>Package ID</th>
+        <th>Costumer Name-Surname</th>
         <th>Address</th>
         <th>City</th>
         <th>Estimated Arrival Time</th>
-      </tr>
+        <th>Courier ID</th>
+    </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>İstanbul Cd. No: 123</td>
-        <td>İstanbul</td>
-        <td>12:00</td>
-      </tr>
-
+    {% if courier_filter.qs %}
+        {% for package in courier_filter.qs %}
+            <tr>
+                <td>{{ package.package_id }}</td>
+                <td>{{ package.customer_name }}</td>
+                <td>{{ package.address }}</td>
+                <td>{{ package.city }}</td>
+                <td>{{ package.estimated_arrival_time }}</td>
+                <td>{{ package.courier.courier_id }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
     </tbody>
-  </table>
+
+</table>
 </body>
 </html>

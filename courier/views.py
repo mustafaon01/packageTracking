@@ -11,10 +11,6 @@ def index(request):
     return render(request, 'home.html')
 
 
-def courier(request):
-    return render(request, 'courier.html')
-
-
 def branch(request):
     form = PackageForm()
     form_courier = CourierForm()
@@ -75,3 +71,21 @@ def costumer(request):
     }
 
     return render(request, 'costumer.html', context)
+
+
+def courier(request):
+    packages = Package.objects.select_related('courier').all()
+    couriers = Courier.objects.all()
+    if request.method == "GET":
+        courier_filter = Courier_filter(request.GET, queryset=packages, request=request)
+        if "courier_id" in request.GET:
+            id = request.GET.get("courier_id")
+            courier_filter = Courier_filter(request.GET, queryset=Courier.objects.filter(courier_id=id),
+                                            request=request)
+            print(Courier.objects.filter(courier_id=id))
+    context = {
+        'packages': courier_filter.qs,
+        "couriers": couriers,
+        "courier_filter": courier_filter
+    }
+    return render(request, 'courier.html', context)
