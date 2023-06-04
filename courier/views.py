@@ -74,18 +74,17 @@ def costumer(request):
 
 
 def courier(request):
-    packages = Package.objects.select_related('courier').all()
-    couriers = Courier.objects.all()
+    packages = Package.objects.select_related('courier').none()
+    courier_filter = Courier_filter(request.GET, queryset=packages, request=request)
     if request.method == "GET":
-        courier_filter = Courier_filter(request.GET, queryset=packages, request=request)
         if "courier_id" in request.GET:
             id = request.GET.get("courier_id")
-            courier_filter = Courier_filter(request.GET, queryset=Courier.objects.filter(courier_id=id),
+            packages = Package.objects.select_related('courier').filter(courier__courier_id=id)
+            courier_filter = Courier_filter(request.GET, queryset=packages,
                                             request=request)
             print(Courier.objects.filter(courier_id=id))
     context = {
         'packages': courier_filter.qs,
-        "couriers": couriers,
         "courier_filter": courier_filter
     }
     return render(request, 'courier.html', context)
