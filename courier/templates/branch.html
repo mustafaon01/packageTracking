@@ -3,116 +3,123 @@
 <head>
     <title>Branch</title>
     <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 20px;
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
 
-    th {
-      background-color: #f2f2f2;
-    }
+        th {
+            background-color: #f2f2f2;
+        }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 5px;
-    }
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
 
-    button {
-      padding: 5px 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
+        .form-row {
+            display: flex;
+        }
+
+        .form-row input[type="text"],
+        .form-row button {
+            flex: 1;
+            margin-right: 5px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-<h1>Package Tracking System</h1>
+    <h1 class="title">Package Tracking System</h1>
 
-<h2>Enter Courier Information</h2>
-<table>
-    <tr>
-        <th>Courier ID</th>
-        <th>Courier Name</th>
-        <th>Location</th>
-        <th>Action</th>
-    </tr>
-    <tr>
-        <form method="POST">
-            {% csrf_token %}
-            <td>{{form_courier.courier_id}}</td>
-            <td>{{form_courier.courier_name}}</td>
-            <td>{{form_courier.location}}</td>
-            <td>
-            <button name = "add_courier" type="submit">ADD COURIER</button>
-          </td>
-        </form>
+    <h2>Enter Courier Information</h2>
+    <table>
+        <tr>
+            <th>Courier ID</th>
+            <th>Courier Name</th>
+            <th>Location</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <form method="POST">
+                {% csrf_token %}
+                <td>{{form_courier.courier_id}}</td>
+                <td>{{form_courier.courier_name}}</td>
+                <td>{{form_courier.location}}</td>
+                <td>
+                    <button name="add_courier" type="submit">ADD COURIER</button>
+                </td>
+            </form>
+        </tr>
+        {% for courier in couriers %}
+            <tr>
+                <td>{{ courier.courier_id }}</td>
+                <td>{{ courier.courier_name }}</td>
+                <td>{{ courier.location }}</td>
+                <td> - </td>
+            </tr>
+        {% endfor %}
+    </table>
 
-    </tr>
-    {% for courier in couriers %}
-<tr>
-    <td>{{ courier.courier_id }}</td>
-    <td>{{ courier.courier_name}}</td>
-    <td>{{ courier.location }}</td>
-    <td> - </td>
-</tr>
-{% endfor %}
-</table>
-
-
-
-<h2>Enter Package Information</h2>
-
-
-<table>
-    <tr>
-        <th>Package ID</th>
-        <th>Costumer Name-Surname</th>
-        <th>Address</th>
-        <th>City</th>
-        <th>Estimated Arrival Time</th>
-        <th>Courier</th>
-      <th>action</th>
-    </tr>
-
-    <tr>
-        <form method="POST">
-            {% csrf_token %}
-            <td>{{ form.package_id }}</td>
-            <td>{{ form.customer_name }}</td>
-            <td>{{ form.address }}</td>
-            <td>{{ form.city }}</td>
-            <td>{{ form.estimated_arrival_time }}</td>
-            <td>
-                {{ form.courier }}
-            </td>
-          <td>
-            <button name="add_package" type="submit">ADD PACKAGE</button>
-          </td>
-        </form>
-    </tr>
-    {% for package  in packages %}
-<tr>
-    <td>{{ package.package_id }}</td>
-    <td>{{ package.customer_name }}</td>
-    <td>{{ package.address }}</td>
-    <td>{{ package.city }}</td>
-    <td>{{ package.estimated_arrival_time }}</td>
-    <td>
-        {{ package.courier }}
-    </td>
-    <td> - </td>
-</tr>
-{% endfor %}
-</table>
-
-
+    <h2>Enter Package Information</h2>
+    <table>
+        <tr>
+            <th>Package ID</th>
+            <th>Customer Name-Surname</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Estimated Arrival Time</th>
+            <th>Courier</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <form method="POST">
+                {% csrf_token %}
+                <td>{{ form.package_id }}</td>
+                <td>{{ form.customer_name }}</td>
+                <td>{{ form.address }}</td>
+                <td>{{ form.city }}</td>
+                <td>{{ form.estimated_arrival_time }}</td>
+                <td>
+                    {{ form.courier }}
+                </td>
+                <td>
+                    <button name="add_package" type="submit">ADD PACKAGE</button>
+                </td>
+            </form>
+        </tr>
+        {% for package in packages %}
+            <tr>
+                <td>{{ package.package_id }}</td>
+                <td>{{ package.customer_name }}</td>
+                <td>{{ package.address }}</td>
+                <td>{{ package.city }}</td>
+                <td>{{ package.estimated_arrival_time }}</td>
+                <td>
+                    {{ package.courier }}
+                </td>
+                <td> - </td>
+            </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

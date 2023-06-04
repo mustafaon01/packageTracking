@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Costumer</title>
+    <title>Customer</title>
     <style>
         table {
             border-collapse: collapse;
@@ -27,7 +27,7 @@
             text-align: center;
             font-size: 14px;
             padding: 8px;
-            width: 100px;
+            width: 150px;
             transition: all 0.5s;
             cursor: pointer;
             margin: 5px;
@@ -57,57 +57,78 @@
             opacity: 1;
             right: 0;
         }
+
+        .form-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 6px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .form-row input[type="text"] {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
-<form method="get">
-    {{ filter.form.package_id }}
-    <button type="submit">SEARCH</button>
-</form>
+    <div class="form-container">
+        <form method="get">
+            {{ filter.form.package_id }}
+            <button type="submit" class="button"><span>SEARCH</span></button>
+        </form>
+    </div>
 
-
-<table>
-    <thead>
-    <tr>
-        <th>Package ID</th>
-        <th>Costumer Name-Surname</th>
-        <th>Address</th>
-        <th>City</th>
-        <th>Estimated Arrival Time</th>
-        <th>Courier</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% if filter.qs %}
-        {% for package in filter.qs %}
+    <table>
+        <thead>
             <tr>
-                <td>{{ package.package_id }}</td>
-                <td>{{ package.customer_name }}</td>
-                <td>{{ package.address }}</td>
-                <td>{{ package.city }}</td>
-                <td>{{ package.estimated_arrival_time }}</td>
-                <td>{{ package.courier }}</td>
+                <th>Package ID</th>
+                <th>Customer Name-Surname</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Estimated Arrival Time</th>
+                <th>Courier</th>
             </tr>
-        {% endfor %}
-    {% endif %}
-    </tbody>
+        </thead>
+        <tbody>
+            {% if filter.qs %}
+                {% for package in filter.qs %}
+                    <tr>
+                        <td>{{ package.package_id }}</td>
+                        <td>{{ package.customer_name }}</td>
+                        <td>{{ package.address }}</td>
+                        <td>{{ package.city }}</td>
+                        <td>{{ package.estimated_arrival_time }}</td>
+                        <td>{{ package.courier }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
 
-</table>
-<div> <form method="POST">
-    {% csrf_token %}
-    <input type="text" id="id_date_update" name="date_update">
-    <button name="time" type="submit">Change Date</button>
-</form>
-</div>
+    <div class="form-row">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" id="id_date_update" name="date_update" placeholder="New Date (YYYY-MM-DD)">
+            <button name="time" type="submit" class="button"><span>Change Date</span></button>
+        </form>
 
-<div>
-    <form id="address-form" method="POST">
-    {% csrf_token %}
-    <input type="text" id="id_address_update" name="address_update">
-    <button name="address" type="submit">Change Address</button>
-</form>
-</div>
-
-
+        <form id="address-form" method="POST">
+            {% csrf_token %}
+            <input type="text" id="id_address_update" name="address_update" placeholder="New Address">
+            <button name="address" type="submit" class="button"><span>Change Address</span></button>
+        </form>
+    </div>
 </body>
 </html>
